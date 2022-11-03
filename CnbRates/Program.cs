@@ -24,7 +24,9 @@ while (day.Month == 1)
 
 
 // zápis do DB
-var persister = new DbPersister();
-await persister.SaveCurrenciesAsync(currenciesLookupService.GetCurrencies());
+var ctx = new MyDbContext();
+await ctx.Database.EnsureCreatedAsync();
+ctx.Currencies.AddRange(currenciesLookupService.GetCurrencies());
+await ctx.SaveChangesAsync();
 
 Debugger.Break();
